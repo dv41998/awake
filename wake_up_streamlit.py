@@ -22,7 +22,7 @@ try:
     for url in STREAMLIT_APPS:
         try:
             print(f"[{datetime.datetime.now()}] Trying: {url}")
-            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+            driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
             driver.get(url)
 
             WebDriverWait(driver, 10).until(
