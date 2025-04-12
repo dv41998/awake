@@ -38,11 +38,17 @@ try:
                 )
                 driver.execute_script("arguments[0].click();", wake_button)
                 print(f"[{datetime.datetime.now()}] ✅ Clicked wake button at: {url}")
-                time.sleep(8)  # wait for app to start
-                driver.get(url)  # reload to ensure it initializes
+                time.sleep(8)
+                driver.get(url)
                 print(f"[{datetime.datetime.now()}] 🔁 Reloaded app after waking")
             except TimeoutException:
-                print(f"[{datetime.datetime.now()}] ⏱️ Wake button not found at: {url}")
+                print(f"[{datetime.datetime.now()}] ⏱️ Wake button not found at: {url} (already active?)")
+
+            # 🔁 Ping again twice to keep app alive
+            for i in range(2):
+                time.sleep(450)  # wait 7.5 minutes
+                driver.get(url)
+                print(f"[{datetime.datetime.now()}] 🔁 Pinged app again to keep it awake ({i+1}/2)")
 
             driver.quit()
         except Exception as e:
