@@ -10,6 +10,7 @@ try:
     from webdriver_manager.chrome import ChromeDriverManager
     from streamlit_app import STREAMLIT_APPS
     import datetime
+    import time
 
     print("✅ All imports successful")
 
@@ -37,6 +38,9 @@ try:
                 )
                 driver.execute_script("arguments[0].click();", wake_button)
                 print(f"[{datetime.datetime.now()}] ✅ Clicked wake button at: {url}")
+                time.sleep(8)  # wait for app to start
+                driver.get(url)  # reload to ensure it initializes
+                print(f"[{datetime.datetime.now()}] 🔁 Reloaded app after waking")
             except TimeoutException:
                 print(f"[{datetime.datetime.now()}] ⏱️ Wake button not found at: {url}")
 
