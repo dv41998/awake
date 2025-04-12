@@ -2,6 +2,7 @@ print("🔥 wake_up_streamlit.py started running")
 
 try:
     from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
@@ -22,7 +23,8 @@ try:
     for url in STREAMLIT_APPS:
         try:
             print(f"[{datetime.datetime.now()}] Trying: {url}")
-            driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
+            service = Service(ChromeDriverManager().install())
+            driver = webdriver.Chrome(service=service, options=options)
             driver.get(url)
 
             WebDriverWait(driver, 10).until(
